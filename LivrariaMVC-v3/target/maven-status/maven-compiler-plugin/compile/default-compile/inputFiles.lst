@@ -1,27 +1,27 @@
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/LivrariaMvcApplication.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/config/MvcConfig.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/security/UsuarioDetailsServiceImpl.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/controller/ErrorViewController.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/service/impl/UsuarioService.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/domain/Proposta.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/dao/IUsuarioDAO.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/controller/UsuarioController.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/conversor/BigDecimalConversor.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/service/spec/ILojaService.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/service/spec/IClienteService.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/dao/ILojaDAO.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/controller/ClienteController.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/domain/Cliente.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/domain/Usuario.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/service/impl/LojaService.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/domain/Carro.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/config/WebSecurityConfig.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/domain/AbstractEntity.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/validation/UniqueCNPJValidator.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/domain/Loja.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/dao/IClienteDAO.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/service/impl/ClienteService.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/controller/LojaController.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/validation/UniqueCNPJ.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/service/spec/IUsuarioService.java
-/home/rafaelvpp/Documentos/GITHUB FINAL/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/security/UsuarioDetails.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/controller/LojaController.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/service/spec/IUsuarioService.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/domain/AbstractEntity.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/controller/ClienteController.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/config/MvcConfig.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/controller/ErrorViewController.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/dao/IUsuarioDAO.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/domain/Usuario.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/dao/ILojaDAO.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/service/spec/ILojaService.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/security/UsuarioDetailsServiceImpl.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/service/impl/UsuarioService.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/LivrariaMvcApplication.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/domain/Loja.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/controller/UsuarioController.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/service/impl/ClienteService.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/validation/UniqueCNPJValidator.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/service/impl/LojaService.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/domain/Cliente.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/conversor/BigDecimalConversor.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/domain/Carro.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/validation/UniqueCNPJ.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/dao/IClienteDAO.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/domain/Proposta.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/service/spec/IClienteService.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/security/UsuarioDetails.java
+/home/rafaelvpp/Documentos/kkkkkkkkkkkkkkkkkkkkkkk/DSW1-Trab2/LivrariaMVC-v3/src/main/java/br/ufscar/dc/dsw/config/WebSecurityConfig.java

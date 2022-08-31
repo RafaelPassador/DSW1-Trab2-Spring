@@ -37,8 +37,8 @@ public class Carro extends AbstractEntity<Long>{
 	private Integer ano;
 
     @NotNull(message = "{NotNull.carro.km}")
-	@Column(nullable = false, length = 20)
-	private Integer quilometragem;
+	@Column(nullable = false, columnDefinition = "DECIMAL(8,2) DEFAULT 0.0")
+	private BigDecimal quilometragem;
 
     @NotBlank(message = "{NotBlank.carro.descricao}")
     @Size(max = 512)
@@ -46,7 +46,7 @@ public class Carro extends AbstractEntity<Long>{
     private String descricao;
 
     @NotNull(message = "{NotNull.carro.valor}")
-	@Column(nullable = false, columnDefinition = "DECIMAL(12,2) DEFAULT 0.0")
+	@Column(nullable = false, columnDefinition = "DECIMAL(8,2) DEFAULT 0.0")
 	private BigDecimal valor;
 
     @Column(nullable = true, length = 64)//pictures path
@@ -54,8 +54,8 @@ public class Carro extends AbstractEntity<Long>{
 
     @NotNull(message = "{NotNull.carro.loja}")
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    @JoinColumn(name = "loja_id")
+    private Loja loja;
 
     public Integer getAno() {
         return ano;
@@ -66,8 +66,8 @@ public class Carro extends AbstractEntity<Long>{
     public String getDescricao() {
         return descricao;
     }
-    public Usuario getUsuario() {
-        return usuario;
+    public Loja getLoja() {
+        return loja;
     }
     public String getModelo() {
         return modelo;
@@ -75,12 +75,17 @@ public class Carro extends AbstractEntity<Long>{
     public String getPlaca() {
         return placa;
     }
-    public Integer getQuilometragem() {
+    public BigDecimal getQuilometragem() {
         return quilometragem;
     }
     public BigDecimal getValor() {
-        return valor;
-    }
+		return valor;
+	}
+
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
+	}
+
     public String getPictures() {
         return pictures;
     }
@@ -93,8 +98,8 @@ public class Carro extends AbstractEntity<Long>{
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setLoja(Loja loja) {
+        this.loja = loja;
     }
     public void setModelo(String modelo) {
         this.modelo = modelo;
@@ -102,11 +107,8 @@ public class Carro extends AbstractEntity<Long>{
     public void setPlaca(String placa) {
         this.placa = placa;
     }
-    public void setQuilometragem(Integer quilometragem) {
+    public void setQuilometragem(BigDecimal quilometragem) {
         this.quilometragem = quilometragem;
-    }
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
     }
 
 }
