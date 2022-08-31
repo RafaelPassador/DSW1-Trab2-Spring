@@ -55,7 +55,7 @@ public class Carro extends AbstractEntity<Long>{
     @NotNull(message = "{NotNull.carro.loja}")
     @ManyToOne
     @JoinColumn(name = "loja_id")
-    private Loja loja;
+    private Usuario loja;
 
     public Integer getAno() {
         return ano;
@@ -66,8 +66,8 @@ public class Carro extends AbstractEntity<Long>{
     public String getDescricao() {
         return descricao;
     }
-    public Loja getLoja() {
-        return loja;
+    public Usuario getLoja() {
+    return loja;
     }
     public String getModelo() {
         return modelo;
@@ -98,7 +98,7 @@ public class Carro extends AbstractEntity<Long>{
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    public void setLoja(Loja loja) {
+    public void setLoja(Usuario loja) {
         this.loja = loja;
     }
     public void setModelo(String modelo) {

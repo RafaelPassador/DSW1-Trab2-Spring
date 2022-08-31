@@ -31,6 +31,12 @@ public class UsuarioService implements IUsuarioService {
 		return dao.findById(id.longValue());
 	}
 
+	@Override
+	public Usuario buscarPorUsuario(String usuario) {
+		// TODO Auto-generated method stub
+		return dao.getUserByUsername(usuario);
+	}
+
 	@Transactional(readOnly = true)
 	public List<Usuario> buscarTodos() {
 		return dao.findAll();

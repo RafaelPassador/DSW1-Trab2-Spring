@@ -1,5 +1,6 @@
 package br.ufscar.dc.dsw.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -15,9 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.ufscar.dc.dsw.domain.Loja;
+import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.domain.Carro;
-import br.ufscar.dc.dsw.service.spec.ILojaService;
+import br.ufscar.dc.dsw.service.spec.IUsuarioService;
+import br.ufscar.dc.dsw.service.impl.UsuarioService;
 import br.ufscar.dc.dsw.service.spec.ICarroService;
 
 @Controller
@@ -28,7 +30,7 @@ public class CarroController {
 	private ICarroService carroService;
 
 	@Autowired
-	private ILojaService lojaService;
+	private IUsuarioService usuarioService;
 
 	@GetMapping("/cadastrar")
 	public String cadastrar(Carro carro) {
@@ -42,12 +44,27 @@ public class CarroController {
 		return "carro/lista";
 	}
 
+	// @RequestMapping(value = "/username", method = RequestMethod.GET)
+    // @ResponseBody
+    // public String currentUserName(Principal principal) {
+    //     return principal.getName();
+    // }
+
 	@PostMapping("/salvar")
-	public String salvar(@Valid Carro carro, BindingResult result, RedirectAttributes attr) {
+	public String salvar(@Valid Carro carro, Principal principal, BindingResult result, RedirectAttributes attr) {
+
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + carro.getLoja() != null);
+
+		Usuario loja1 =  usuarioService.buscarPorUsuario(principal.getName());
+
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + principal.getName());
+
 
 		if (result.hasErrors()) {
 			return "carro/cadastro";
 		}
+
+		carro.setLoja(loja1);
 
 		carroService.salvar(carro);
 		attr.addFlashAttribute("sucess", "carro.create.sucess");
@@ -80,7 +97,7 @@ public class CarroController {
 	}
 
 	@ModelAttribute("lojas")
-	public List<Loja> listaLojas() {
-		return lojaService.searchAll();
+	public List<Usuario> listaLojas() {
+		return usuarioService.buscarTodos();
 	}
 }

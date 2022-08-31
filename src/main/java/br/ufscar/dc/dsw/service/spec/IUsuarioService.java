@@ -14,5 +14,7 @@ public interface IUsuarioService {
 
 	void salvar(Usuario editora);
 
+	Usuario buscarPorUsuario(String usuario);
+
 	void excluir(Long id);	
 }
