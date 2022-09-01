@@ -1,6 +1,8 @@
 package br.ufscar.dc.dsw.config;
 
 import java.util.Locale;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,6 +14,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import br.ufscar.dc.dsw.conversor.BigDecimalConversor;
 
@@ -48,4 +51,19 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(new BigDecimalConversor());
     }
+
+	@Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        exposeDirectory("carros-fotos", registry);
+    }
+     
+    private void exposeDirectory(String dirName, ResourceHandlerRegistry registry) {
+        Path uploadDir = Paths.get(dirName);
+        String uploadPath = uploadDir.toFile().getAbsolutePath();
+         
+        if (dirName.startsWith("../")) dirName = dirName.replace("../", "");
+         
+        registry.addResourceHandler("/" + dirName + "/**").addResourceLocations("file:/"+ uploadPath + "/");
+
+	}
 }
