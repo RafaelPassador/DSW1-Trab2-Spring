@@ -14,7 +14,7 @@
 					</li>
 				</ul>
 			</div>
-			<a class="btn btn-primary btn-md" th:href="@{/carros/cadastrar}" role="button"> 
+			<a th:if="${visitingRole == 1}" class="btn btn-primary btn-md" th:href="@{/carros/cadastrar}" role="button"> 
 				<span class="oi oi-plus" title="Cadastro" aria-hidden="true"></span> 
 				<span th:text="#{carro.cadastrar.label}"></span>
 			</a>
@@ -51,18 +51,25 @@
 							<td th:text="${#numbers.formatDecimal(carro.quilometragem,2,2,'COMMA')}|"></td>
 							<td th:text="|R$ ${#numbers.formatDecimal(carro.valor,2,2,'COMMA')}|"></td>
 							<td th:text="${carro.loja.name}"></td>
-							<td colspan="2">
+							<td th:if="${visitingRole == 1}" colspan="2">
 								<a class="btn btn-info btn-sm"
 									th:href="@{/carros/editar/{id} (id=${carro.id}) }" role="button"> 
 									<span class="oi oi-brush" th:title="#{link.editar.label}" aria-hidden="true"></span>
 								</a>
-								<button th:id="${#strings.concat('btn_carros/excluir/',carro.id)}" 
-									type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal" sec:authorize="hasRole('ROLE_ADMIN')">
-									<span class="oi oi-circle-x" th:title="#{carro.excluir.label}" aria-hidden="true"></span>
+								<button
+									th:id="${'btn_carros/excluir/' + carro.id}"
+									type="button" class="btn btn-danger btn-sm"
+									data-toggle="modal" data-target="#myModal">
+									<span class="oi oi-circle-x" th:title="#{link.excluir.label}" aria-hidden="true"></span>
 								</button>
-								<button th:id="${#strings.concat('btn_carros/excluir/',carro.id)}" 
-									type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal" sec:authorize="hasRole('ROLE_LOJA')">
-									<span class="oi oi-circle-x" th:title="#{carro.excluir.label}" aria-hidden="true"></span>
+							</td>
+							<td th:if="${visitingRole == 0}">
+								<button class="btn btn-info btn-sm"
+									th:href="@{/carros/comprar/{id} (id=${carro.id}) }" role="button"> 
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart" viewBox="0 0 16 16">
+										<path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5Zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0ZM14 14V5H2v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1ZM8 7.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z"/>
+									  </svg>
+									<!-- <span class="bi bi-bag-check" th:title="#{link.comprar.label}" aria-hidden="true"></span> -->
 								</button>
 							</td>
 						</tr>
