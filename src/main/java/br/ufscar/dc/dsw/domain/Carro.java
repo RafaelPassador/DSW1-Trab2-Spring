@@ -89,6 +89,11 @@ public class Carro extends AbstractEntity<Long>{
     public String getPictures() {
         return pictures;
     }
+
+    public void setPictures(String pictures) {
+        this.pictures = pictures;
+    }
+
     public void setAno(Integer ano) {
         this.ano = ano;
     }

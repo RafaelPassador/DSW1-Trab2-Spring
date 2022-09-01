@@ -26,7 +26,8 @@
 
 			<form
 				th:action="${carro.id == null} ? @{/carros/salvar} : @{/carros/editar}"
-				th:object="${carro}" method="POST">
+				th:object="${carro}" method="POST" 
+				enctype="multipart/form-data">
 
 				<div class="form-row">
 					<div class="form-group col-md-6">
@@ -117,6 +118,12 @@
 						<div class="invalid-feedback">
 							<span th:errors="*{valor}"></span>
 						</div>
+					</div>
+					<div class="photos">
+     
+						<label>Fotos: </label>
+						<input type="file" name="image" accept="image/png, image/jpeg" />
+						 
 					</div>
 				</div>
 
