@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -16,19 +17,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.domain.Carro;
 import br.ufscar.dc.dsw.service.spec.IUsuarioService;
-import br.ufscar.dc.dsw.service.impl.UsuarioService;
 import br.ufscar.dc.dsw.service.spec.ICarroService;
 import br.ufscar.dc.Utils.FileUploadUtil;
-
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.RedirectView;
-import org.springframework.util.StringUtils;
 
 @Controller
 @RequestMapping("/carros")
@@ -72,7 +70,7 @@ public class CarroController {
 
 
 	@PostMapping("/salvar")
-	public String salvar(@Valid Carro carro , BindingResult result, RedirectAttributes attr, Principal principal) {
+	public String salvar(@Valid Carro carro , BindingResult result, RedirectAttributes attr, Principal principal, @RequestParam("image") MultipartFile file) throws IOException {
 
 		System.out.println("Entrouu");
 		Usuario loja =  usuarioService.buscarPorUsuario(principal.getName());
@@ -89,7 +87,8 @@ public class CarroController {
 
 		carroService.salvar(carro);
 		attr.addFlashAttribute("sucess", "carro.create.sucess");
-		return "redirect:/carros/listar";
+
+		return saveCarPhoto(carro, file);
 	}
 
 	@GetMapping("/editar/{id}")
@@ -127,14 +126,13 @@ public class CarroController {
 		return usuarioService.buscarTodos();
 	}
 
-	//@Autowired
-    //private UserRepository repo;
-
-	@PostMapping("/carros/salvar")
-    public RedirectView saveCarPhoto(Carro carro, @RequestParam("image") MultipartFile multipartFile) throws IOException {
+	//@PostMapping("/salvar")
+    public String saveCarPhoto(Carro carro, @RequestParam("image") MultipartFile multipartFile) throws IOException {
          
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         carro.setPictures(fileName);
+		
+		System.out.println(carro.getPictures());
          
         //Carro savedCarro = repo.save(carro);
  
@@ -142,7 +140,7 @@ public class CarroController {
  
         FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
-        return new RedirectView("/carros", true);
+		return "redirect:/carros/listar";
     }
  
     // other fields and getters, setters are not shown 
