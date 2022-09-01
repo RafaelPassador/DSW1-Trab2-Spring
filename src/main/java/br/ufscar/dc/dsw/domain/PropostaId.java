@@ -5,12 +5,13 @@ import java.io.Serializable;
 import groovy.transform.EqualsAndHashCode;
 
 @EqualsAndHashCode
-public class PropostaId extends AbstractEntity<Long> implements Serializable{
+public class PropostaId implements Serializable{
     private Carro carro;
     private Loja loja;
+    private Long id;
 
     public PropostaId(Carro carro, Loja loja, Long id){
-        setId(id);
+        this.id = id;
         this.carro = carro;
         this.loja = loja;
     }   

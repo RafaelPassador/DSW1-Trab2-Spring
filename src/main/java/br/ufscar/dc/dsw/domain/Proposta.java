@@ -16,6 +16,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 
 @SuppressWarnings("serial")
 @Entity
@@ -32,7 +34,7 @@ public class Proposta extends AbstractEntity<Long>{
     @Column(nullable = false, length = 512)
     private String condicoes;
     
-    @NotBlank(message = "{NotBlank.proposta.condicoes}")
+    // @NotBlank(message = "{NotBlank.proposta.condicoes}")
     @Size(max = 11)
     @Column(nullable = false, length = 11)
     private String estado;
@@ -41,23 +43,23 @@ public class Proposta extends AbstractEntity<Long>{
     @Column(nullable = true, length = 580)
     private String contraproposta;
 
-    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(nullable = false)
     private Date data_proposta;
 
-    @NotNull(message = "{NotNull.carro.loja}")
+    // @NotNull(message = "{NotNull.carro.loja}")
     @ManyToOne
     @JoinColumn(name = "loja_id")
-    private Loja loja;
+    private Usuario loja;
 
     @Id
-    @NotNull(message = "{NotNull.carro.loja}")
+    // @NotNull(message = "{NotNull.carro.loja}")
     @ManyToOne
     @JoinColumn(name = "carro_id")
     private Carro carro;
  
     @Id
-    @NotNull(message = "{NotNull.carro.loja}")
+    // @NotNull(message = "{NotNull.carro.loja}")
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
@@ -80,7 +82,7 @@ public class Proposta extends AbstractEntity<Long>{
     public String getEstado() {
         return estado;
     }
-    public Loja getLoja() {
+    public Usuario getLoja() {
         return loja;
     }
     public BigDecimal getValor() {
@@ -101,7 +103,7 @@ public class Proposta extends AbstractEntity<Long>{
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    public void setLoja(Loja loja) {
+    public void setLoja(Usuario loja) {
         this.loja = loja;
     }
     public void setUsuario(Usuario usuario) {

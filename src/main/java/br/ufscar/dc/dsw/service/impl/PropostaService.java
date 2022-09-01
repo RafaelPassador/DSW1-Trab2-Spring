@@ -18,8 +18,8 @@ public class PropostaService implements IPropostaService {
 	@Autowired
 	IPropostaDAO dao;
 	
-	public void salvar(Proposta carro) {
-		dao.save(carro);
+	public void salvar(Proposta proposta) {
+		dao.save(proposta);
 	}
 
 	public void excluir(Long id) {

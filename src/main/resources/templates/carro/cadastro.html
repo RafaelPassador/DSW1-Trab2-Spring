@@ -43,9 +43,10 @@
 
 					<div class="form-group col-md-6">
 						<label th:text="#{carro.placa.label}" for="placa"></label> 
-						<input type="text" class="form-control" id="placa" placeholder="Placa"
+						<input type="text" class="form-control" id="placa" placeholder="ABC1234"
 							autofocus="autofocus" th:field="*{placa}"
-							th:classappend="${#fields.hasErrors('placa')} ? is-invalid" />
+							th:classappend="${#fields.hasErrors('placa')} ? is-invalid"
+							data-mask="0000000" data-mask-reverse="true"/>
 						
 						<div class="invalid-feedback">
 							<span th:errors="*{placa}"></span>
