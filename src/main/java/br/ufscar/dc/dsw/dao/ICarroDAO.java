@@ -12,6 +12,8 @@ public interface ICarroDAO extends CrudRepository<Carro, Long>{
 	Carro findById(long id);
 
 	List<Carro> findAll();
+
+	Carro findByPlaca(String placa);
 	
 	Carro save(Carro carro);
 

@@ -10,8 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import br.ufscar.dc.dsw.dao.ICarroDAO;
 import br.ufscar.dc.dsw.dao.IUsuarioDAO;
-import br.ufscar.dc.dsw.domain.Usuario;
+import br.ufscar.dc.dsw.domain.Carro;
+import br.ufscar.dc.dsw.domain.Usuario; 
 
 @SpringBootApplication
 public class VendaCarrosApplication {
@@ -21,7 +23,7 @@ public class VendaCarrosApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(IUsuarioDAO usuarioDAO, BCryptPasswordEncoder encoder) {
+	public CommandLineRunner demo(IUsuarioDAO usuarioDAO, BCryptPasswordEncoder encoder, ICarroDAO carroDAO) {
 		return (args) -> {
 			
 			Usuario u1 = new Usuario();
@@ -74,6 +76,17 @@ public class VendaCarrosApplication {
 			u5.setNascimento(d);
 			u5.setEnabled(true);
 			usuarioDAO.save(u5);
+
+			Carro c = new Carro();
+			c.setAno(2000);
+			c.setChassi("brabo");
+			c.setDescricao("relampago");
+			c.setLoja(u4);
+			c.setModelo("Disney");
+			c.setPlaca("katchau");
+			c.setQuilometragem(BigDecimal.valueOf(10));
+			c.setValor(BigDecimal.valueOf(100.20));
+			carroDAO.save(c);
 			
 		};
 	}
