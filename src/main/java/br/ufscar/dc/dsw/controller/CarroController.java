@@ -2,6 +2,7 @@ package br.ufscar.dc.dsw.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.io.IOException;
 
 import javax.validation.Valid;
 
@@ -22,6 +23,12 @@ import br.ufscar.dc.dsw.domain.Carro;
 import br.ufscar.dc.dsw.service.spec.IUsuarioService;
 import br.ufscar.dc.dsw.service.impl.UsuarioService;
 import br.ufscar.dc.dsw.service.spec.ICarroService;
+import br.ufscar.dc.Utils.FileUploadUtil;
+
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.util.StringUtils;
 
 @Controller
 @RequestMapping("/carros")
@@ -119,4 +126,24 @@ public class CarroController {
 	public List<Usuario> listaLojas() {
 		return usuarioService.buscarTodos();
 	}
+
+	//@Autowired
+    //private UserRepository repo;
+
+	@PostMapping("/carros/salvar")
+    public RedirectView saveCarPhoto(Carro carro, @RequestParam("image") MultipartFile multipartFile) throws IOException {
+         
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        carro.setPictures(fileName);
+         
+        //Carro savedCarro = repo.save(carro);
+ 
+        String uploadDir = "carros-fotos/" + carro.getId();
+ 
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
+        return new RedirectView("/carros", true);
+    }
+ 
+    // other fields and getters, setters are not shown 
 }
