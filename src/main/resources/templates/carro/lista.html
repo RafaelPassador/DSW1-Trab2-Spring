@@ -51,6 +51,11 @@
 							<td th:text="${#numbers.formatDecimal(carro.quilometragem,2,2,'COMMA')}|"></td>
 							<td th:text="|R$ ${#numbers.formatDecimal(carro.valor,2,2,'COMMA')}|"></td>
 							<td th:text="${carro.loja.name}"></td>
+							<!-- <td><img th:src="/carros-fotos/${carro.id}/${carro.pictures}"/></td> -->
+							<td th:each="picture : ${carro.picturesList}"> oi
+								<!-- <img th:src="/${picture}"/></td> -->
+								<td th:text="${picture}">asdasd</td>
+							</td>
 							<td colspan="2">
 								<a class="btn btn-info btn-sm"
 									th:href="@{/carros/editar/{id} (id=${carro.id}) }" role="button"> 
