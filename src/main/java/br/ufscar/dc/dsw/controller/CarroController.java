@@ -44,27 +44,21 @@ public class CarroController {
 		return "carro/lista";
 	}
 
-	// @RequestMapping(value = "/username", method = RequestMethod.GET)
-    // @ResponseBody
-    // public String currentUserName(Principal principal) {
-    //     return principal.getName();
-    // }
 
 	@PostMapping("/salvar")
-	public String salvar(@Valid Carro carro, Principal principal, BindingResult result, RedirectAttributes attr) {
+	public String salvar(@Valid Carro carro , BindingResult result, RedirectAttributes attr, Principal principal) {
 
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + carro.getLoja() != null);
+		System.out.println("Entrouu");
+		// Usuario loja1 =  usuarioService.buscarPorUsuario(principal.getName());
 
-		Usuario loja1 =  usuarioService.buscarPorUsuario(principal.getName());
-
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + principal.getName());
+		// System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + principal.getName());
 
 
 		if (result.hasErrors()) {
 			return "carro/cadastro";
 		}
 
-		carro.setLoja(loja1);
+		// carro.setLoja(loja1);
 
 		carroService.salvar(carro);
 		attr.addFlashAttribute("sucess", "carro.create.sucess");
@@ -79,7 +73,7 @@ public class CarroController {
 
 	@PostMapping("/editar")
 	public String editar(@Valid Carro carro, BindingResult result, RedirectAttributes attr) {
-
+		System.out.println("UAIII");
 		if (result.hasErrors()) {
 			return "carro/cadastro";
 		}

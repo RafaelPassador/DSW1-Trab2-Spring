@@ -20,6 +20,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import br.ufscar.dc.dsw.validation.UniqueCNPJ;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Usuario")
@@ -36,7 +38,7 @@ public class Usuario extends AbstractEntity<Long> {
     @NotBlank
     @Column(nullable = false, length = 60)
     private String name;
-    
+	@UniqueCNPJ(message = "{Unique.usuario.CNPJ}")
     @NotBlank
 	@Size(min = 14, max = 18)
     @Column(nullable = false, length = 18)
