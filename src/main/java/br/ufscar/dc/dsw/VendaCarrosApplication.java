@@ -14,10 +14,10 @@ import br.ufscar.dc.dsw.dao.IUsuarioDAO;
 import br.ufscar.dc.dsw.domain.Usuario;
 
 @SpringBootApplication
-public class LivrariaMvcApplication {
+public class VendaCarrosApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LivrariaMvcApplication.class, args);
+		SpringApplication.run(VendaCarrosApplication.class, args);
 	}
 
 	@Bean
