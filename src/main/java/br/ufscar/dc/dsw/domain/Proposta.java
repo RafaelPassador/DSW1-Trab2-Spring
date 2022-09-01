@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -19,6 +20,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Proposta")
+@IdClass(PropostaId.class)
 public class Proposta extends AbstractEntity<Long>{
     
     @NotNull(message = "{NotNull.proposta.valor}")
@@ -53,7 +55,7 @@ public class Proposta extends AbstractEntity<Long>{
     @ManyToOne
     @JoinColumn(name = "carro_id")
     private Carro carro;
-
+ 
     @Id
     @NotNull(message = "{NotNull.carro.loja}")
     @ManyToOne

@@ -54,7 +54,7 @@
 
 					<div class="form-group col-md-6">
 						<label th:text="#{carro.chassi.label}" for="chassi"></label> 
-						<input type="text" class="form-control" id="chassi" placeholder="Placa"
+						<input type="text" class="form-control" id="chassi" placeholder="Chassi"
 							autofocus="autofocus" th:field="*{chassi}"
 							th:classappend="${#fields.hasErrors('chassi')} ? is-invalid" />
 						
@@ -74,7 +74,7 @@
 						</div>
 					</div>
 
-					<div class="form-group col-md-6">
+					<!-- <div class="form-group col-md-6">
 						<label th:text="#{carro.loja.label}" for="loja"></label> 
 						<select id="loja" class="form-control" th:field="*{loja}"
 							th:classappend="${#fields.hasErrors('loja')} ? is-invalid">
@@ -86,7 +86,7 @@
 						<div class="invalid-feedback">
 							<span th:errors="*{loja}"></span>
 						</div>
-					</div>
+					</div> -->
 
 					<div class="form-group col-md-6">
 						<label th:text="#{carro.ano.label}" for="ano"></label> 

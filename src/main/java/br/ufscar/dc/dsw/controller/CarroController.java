@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,8 +44,26 @@ public class CarroController {
 	}
 
 	@GetMapping("/listar")
-	public String listar(ModelMap model) {
+	public String listar(ModelMap model, Principal principal) {
+		
+		Usuario user = usuarioService.buscarPorUsuario(principal.getName());
+
+		int role = 0;
+		switch(user.getRole()){
+			case "ROLE_USER":
+				role = 0;
+			break;
+			case "ROLE_STORE":
+				role = 1;
+			break;
+			case "ROLE_ADMIN":
+				role = 2;
+			break;
+		}
+
+		model.addAttribute("visitingRole", role);
 		model.addAttribute("carros", carroService.searchAll());
+		System.out.println("ATE AQUI VEIO2");
 		
 		return "carro/lista";
 	}
@@ -54,16 +73,17 @@ public class CarroController {
 	public String salvar(@Valid Carro carro , BindingResult result, RedirectAttributes attr, Principal principal, @RequestParam("image") MultipartFile file) throws IOException {
 
 		System.out.println("Entrouu");
-		// Usuario loja1 =  usuarioService.buscarPorUsuario(principal.getName());
+		Usuario loja =  usuarioService.buscarPorUsuario(principal.getName());
 
 		// System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + principal.getName());
 
-
+		
 		if (result.hasErrors()) {
 			return "carro/cadastro";
 		}
 
-		// carro.setLoja(loja1);
+		carro.setLoja(loja);
+		
 
 		carroService.salvar(carro);
 		attr.addFlashAttribute("sucess", "carro.create.sucess");
@@ -78,13 +98,18 @@ public class CarroController {
 	}
 
 	@PostMapping("/editar")
-	public String editar(@Valid Carro carro, BindingResult result, RedirectAttributes attr) {
-		System.out.println("UAIII");
-		if (result.hasErrors()) {
+	public String editar(@Valid Carro carro, BindingResult result, RedirectAttributes attr, Principal principal) {
+
+		Usuario loja =  usuarioService.buscarPorUsuario(principal.getName());
+		
+		if (result.getFieldErrorCount() > 1 || result.getFieldError("placa") == null) {
 			return "carro/cadastro";
 		}
-
+		
+		carro.setLoja(loja);
+		
 		carroService.salvar(carro);
+		System.out.println("TCHAU MUNDO2");
 		attr.addFlashAttribute("sucess", "carro.edit.sucess");
 		return "redirect:/carros/listar";
 	}

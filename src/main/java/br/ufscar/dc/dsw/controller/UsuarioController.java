@@ -87,7 +87,7 @@ public class UsuarioController {
 	public String editar(@Valid Usuario usuario, BindingResult result, RedirectAttributes attr) {
 		
 		boolean red = usuario.getCPF().length() > 14;
-		if (result.hasErrors()) {
+		if (result.getFieldErrorCount() > 1 || result.getFieldError("CPF") == null){
 			return "usuario/cadastro" + (red ? "L" : "C");
 		}
 

@@ -14,12 +14,15 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import br.ufscar.dc.dsw.validation.UniquePlate;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Carro")
 public class Carro extends AbstractEntity<Long>{
     //   loja_id bigint not null, primary key(placa), foreign key(loja_id) references Loja(id) on delete cascade)
 
+    @UniquePlate(message = "{Unique.car.placa}")
     @NotBlank(message = "{NotBlank.carro.placa}")
     @Size(min = 7, max = 7)
     @Column(nullable = false, unique = true, length = 7)
@@ -55,7 +58,7 @@ public class Carro extends AbstractEntity<Long>{
     @Column(nullable = true, length = 64)//pictures path
     private String pictures;
 
-    @NotNull(message = "{NotNull.carro.loja}")
+    // @NotNull(message = "{NotNull.carro.loja}")
     @ManyToOne
     @JoinColumn(name = "loja_id")
     private Usuario loja;
