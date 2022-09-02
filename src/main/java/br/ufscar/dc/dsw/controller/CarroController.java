@@ -124,7 +124,15 @@ public class CarroController {
 			@RequestParam("image") MultipartFile file) throws IOException {
 		if (!gamb.isEmpty())
 			carro.setPictures(gamb);
-		System.out.println("Editandoo" + carro.getPictures());
+		boolean overFoto = false;
+		if (carro.getFotosImagePath() != null)
+			overFoto = carro.getFotosImagePath().size() >= 10;
+		if (overFoto) {
+			attr.addFlashAttribute("fail", "carro.fotos.fail");
+			return "redirect:/carros/listar";
+		}
+
+		System.out.println("Editandoo" + carro.getPictures() + " bool = " + overFoto);
 		Usuario loja = usuarioService.buscarPorUsuario(principal.getName());
 
 		if (result.getFieldErrorCount() > 1 || result.getFieldError("placa") == null) {
