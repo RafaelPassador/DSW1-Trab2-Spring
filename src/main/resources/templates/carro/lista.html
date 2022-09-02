@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html layout:decorate="~{layout}">
+
 <head>
 </head>
+
 <body>
 	<section class="layout-content" layout:fragment="corpo">
 
@@ -14,8 +16,8 @@
 					</li>
 				</ul>
 			</div>
-			<a th:if="${visitingRole == 1}" class="btn btn-primary btn-md" th:href="@{/carros/cadastrar}" role="button"> 
-				<span class="oi oi-plus" title="Cadastro" aria-hidden="true"></span> 
+			<a th:if="${visitingRole == 1}" class="btn btn-primary btn-md" th:href="@{/carros/cadastrar}" role="button">
+				<span class="oi oi-plus" title="Cadastro" aria-hidden="true"></span>
 				<span th:text="#{carro.cadastrar.label}"></span>
 			</a>
 		</nav>
@@ -41,7 +43,7 @@
 							<th th:text="#{acao.label}"></th>
 						</tr>
 					</thead>
-					<tbody>						
+					<tbody>
 						<tr th:each="carro : ${carros}">
 							<td th:text="${carro.id}"></td>
 							<td th:text="${carro.modelo}"></td>
@@ -54,44 +56,49 @@
 							<td th:text="${carro.loja.name}"></td>
 							<!-- <td><img th:src="/carros-fotos/${carro.id}/${carro.pictures}"/></td> -->
 							<!-- <td th:each="picture : ${pictures}">  -->
-							<td th:if="${pictures.get(carro.id) != null}" >
-								<!-- <img th:each="picture : ${pictures.get(carro.id)}" th:src="${picture}"/> -->
-								<!-- <img th:each="picture : ${pictures.get(carro.id)}" th:src="@{/carros-fotos/1/12683.jpeg}"/> -->
-								<!-- <td th:each="picture : ${pictures.get(carro.id)}" th:text="${picture}"></td> -->
-					
-								<!-- </td> -->
+							<td th:if="${pictures.get(carro.id) != null}">
+								<img th:each="picture : ${pictures.get(carro.id)}" th:src="${picture}"
+									style="max-width: 100px; max-height: 100px;" />
+								<span th:text="${imagem}"></span>
 							</td>
-								<!-- <td th:text="${picture}">asdasd</td> -->
+							<!-- <img th:each="picture : ${pictures.get(carro.id)}" th:src="@{/carros-fotos/1/12683.jpeg}"/> -->
+							<!-- <td th:each="picture : ${pictures.get(carro.id)}" th:text="${picture}"></td> -->
+							<!-- </td> -->
+							</td>
+							<!-- <td th:text="${picture}">asdasd</td> -->
 							<!-- </td> -->
 							<td th:if="${visitingRole == 1}" colspan="2">
-								<a class="btn btn-info btn-sm"
-									th:href="@{/carros/editar/{id} (id=${carro.id}) }" role="button"> 
+								<a class="btn btn-info btn-sm" th:href="@{/carros/editar/{id} (id=${carro.id}) }"
+									role="button">
 									<span class="oi oi-brush" th:title="#{link.editar.label}" aria-hidden="true"></span>
 								</a>
-								<button
-									th:id="${'btn_carros/excluir/' + carro.id}"
-									type="button" class="btn btn-danger btn-sm"
-									data-toggle="modal" data-target="#myModal">
-									<span class="oi oi-circle-x" th:title="#{link.excluir.label}" aria-hidden="true"></span>
+								<button th:id="${'btn_carros/excluir/' + carro.id}" type="button"
+									class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">
+									<span class="oi oi-circle-x" th:title="#{link.excluir.label}"
+										aria-hidden="true"></span>
 								</button>
 							</td>
 							<td th:if="${visitingRole == 0}">
-								<a class="btn btn-info btn-sm"
-									th:href="@{/propostas/comprar/{id} (id=${carro.id}) }" role="button" > 
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart" viewBox="0 0 16 16">
-										<path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5Zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0ZM14 14V5H2v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1ZM8 7.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z"/>
-									  </svg>
+								<a class="btn btn-info btn-sm" th:href="@{/propostas/comprar/{id} (id=${carro.id}) }"
+									role="button">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-bag-heart" viewBox="0 0 16 16">
+										<path fill-rule="evenodd"
+											d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5Zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0ZM14 14V5H2v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1ZM8 7.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z" />
+									</svg>
 									<!-- <span class="bi bi-bag-check" th:title="#{link.comprar.label}" aria-hidden="true"></span> -->
-									</a>
+								</a>
 							</td>
 							<td sec:authorize="isAnonymous()">
-								<a class="btn btn-info btn-sm"
-									th:href="@{/propostas/comprar/{id} (id=${carro.id}) }" role="button" > 
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart" viewBox="0 0 16 16">
-										<path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5Zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0ZM14 14V5H2v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1ZM8 7.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z"/>
-									  </svg>
+								<a class="btn btn-info btn-sm" th:href="@{/propostas/comprar/{id} (id=${carro.id}) }"
+									role="button">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-bag-heart" viewBox="0 0 16 16">
+										<path fill-rule="evenodd"
+											d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5Zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0ZM14 14V5H2v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1ZM8 7.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z" />
+									</svg>
 									<!-- <span class="bi bi-bag-check" th:title="#{link.comprar.label}" aria-hidden="true"></span> -->
-									</a>
+								</a>
 							</td>
 						</tr>
 					</tbody>
@@ -102,4 +109,5 @@
 		<div th:replace="fragments/modal :: modal"></div>
 	</section>
 </body>
+
 </html>
