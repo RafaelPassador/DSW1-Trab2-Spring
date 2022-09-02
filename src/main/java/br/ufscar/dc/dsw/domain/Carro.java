@@ -148,7 +148,7 @@ public class Carro extends AbstractEntity<Long> {
 		String[] spl = pictures.split("\\|");
 		List<String> arr = new ArrayList<>(Arrays.asList(spl));
 		for (int i = 0; i < arr.size(); i++)
-			arr.set(i, "/carros-fotos/" + getId() + "/" + arr.get(i));
+			arr.set(i, "/image/carros-fotos/" + getId() + "/" + arr.get(i));
 		return arr;
 	}
 }
