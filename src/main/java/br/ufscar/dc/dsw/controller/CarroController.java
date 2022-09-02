@@ -182,10 +182,11 @@ public class CarroController {
 	public Map<Long, List<String>> listaFotos() {
 		Map<Long, List<String>> mapPhoto = new HashMap<>();
 		System.out.println(carroService.searchAll().size() + "TAMANHAO");
-		for (Carro c : carroService.searchAll()) {
-			List<String> carPics = c.getFotosImagePath();
+
+		for (Carro carro : carroService.searchAll()) {
+			List<String> carPics = carroService.searchImages(carro.getPictures());
 			if (carPics != null)
-				mapPhoto.put(c.getId(), carPics);
+				mapPhoto.put(carro.getId(), carPics);
 		}
 		System.out.println("SO VAMO VER ESSAS FOTO");
 
