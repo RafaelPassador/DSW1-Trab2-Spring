@@ -53,7 +53,6 @@ public class CarroController {
 	@GetMapping("/listar")
 	public String listar(ModelMap model, Principal principal) {
 		List<Carro> Cars = carroService.searchAll();
-		System.out.println("Entrou");
 		if (principal != null) {
 
 			Usuario user = usuarioService.buscarPorUsuario(principal.getName());
@@ -89,11 +88,7 @@ public class CarroController {
 	public String salvar(@Valid Carro carro, BindingResult result, RedirectAttributes attr, Principal principal,
 			@RequestParam("image") MultipartFile file) throws IOException {
 
-		System.out.println("Entrouu salva");
 		Usuario loja = usuarioService.buscarPorUsuario(principal.getName());
-
-		// System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
-		// principal.getName());
 
 		if (result.hasErrors()) {
 			for (ObjectError o : result.getAllErrors())
@@ -135,7 +130,6 @@ public class CarroController {
 			return "redirect:/carros/listar";
 		}
 
-		System.out.println("Editandoo" + carro.getPictures() + " bool = " + overFoto);
 		Usuario loja = usuarioService.buscarPorUsuario(principal.getName());
 
 		if (result.getFieldErrorCount() > 1 || result.getFieldError("placa") == null) {
@@ -144,7 +138,6 @@ public class CarroController {
 		carro.setLoja(loja);
 
 		carroService.salvar(carro);
-		System.out.println("TCHAU MUNDO2" + carro.getPictures());
 		attr.addFlashAttribute("sucess", "carro.edit.sucess");
 		// return "redirect:/carros/listar";
 		return saveCarPhoto(carro, file);

@@ -69,13 +69,11 @@
 								<!-- <td><img th:src="/carros-fotos/${carro.id}/${carro.pictures}"/></td> -->
 								<!-- <td th:each="picture : ${pictures}">  -->
 								<td th:if="${pictures.get(carro.id) != null}">
-									<img th:each="picture : ${pictures.get(carro.id)}" th:src="${picture}"
-										style="max-width: 100px; max-height: 100px;" />
-									<span th:text="${imagem}"></span>
-								</td>
-								<!-- <img th:each="picture : ${pictures.get(carro.id)}" th:src="@{/carros-fotos/1/12683.jpeg}"/> -->
-								<!-- <td th:each="picture : ${pictures.get(carro.id)}" th:text="${picture}"></td> -->
-								<!-- </td> -->
+									<!-- <img th:each="picture : ${pictures.get(carro.id)}" th:src="${picture}"/> -->
+									<img th:each="picture : ${pictures.get(carro.id)}" th:src="@{${picture}}"
+										width="100px" height="100px" />
+									<!-- <td th:each="picture : ${pictures.get(carro.id)}" th:text="${picture}"></td> -->
+									<!-- </td> -->
 								</td>
 								<!-- <td th:text="${picture}">asdasd</td> -->
 								<!-- </td> -->

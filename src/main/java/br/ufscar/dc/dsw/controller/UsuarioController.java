@@ -55,7 +55,6 @@ public class UsuarioController {
 	// RedirectAttributes attr) {
 	public String salvar(@Valid Usuario usuario, BindingResult result, RedirectAttributes attr) {
 
-		// System.out.println("HELLOOOOOO");sssss
 		boolean red = usuario.getCPF().length() > 14;
 		if (result.hasErrors()) {
 			return "usuario/cadastro" + (red ? "L" : "C");
