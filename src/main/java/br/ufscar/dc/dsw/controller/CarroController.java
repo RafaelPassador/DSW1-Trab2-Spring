@@ -173,7 +173,7 @@ public class CarroController {
 		Map<Long, List<String>> mapPhoto = new HashMap<>();
 
 		for (Carro carro : carroService.searchAll()) {
-			List<String> carPics = carroService.searchImages(carro.getPictures());
+			List<String> carPics = carro.getFotosImagePath();
 			if (carPics != null)
 				mapPhoto.put(carro.getId(), carPics);
 		}
