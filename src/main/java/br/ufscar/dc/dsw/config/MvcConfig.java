@@ -65,5 +65,5 @@ public class MvcConfig implements WebMvcConfigurer {
 			dirName = dirName.replace("../", "");
 
 		registry.addResourceHandler("/" + dirName + "/**").addResourceLocations("file:/" + uploadPath + "/");
-
+	}
 }
