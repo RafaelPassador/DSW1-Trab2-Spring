@@ -1,6 +1,5 @@
 package br.ufscar.dc.dsw.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,14 +57,14 @@ public class UsuarioService implements IUsuarioService {
 	public List<Usuario> buscarTodos() {
 		return dao.findAll();
 	}
-	
+
 	@Transactional(readOnly = true)
 	public List<Usuario> buscarTodosRoles(String role) {
 		// List<Usuario> all = dao.findAll();
 		// List<Usuario> byRole = new ArrayList<>();
 		// for(Usuario i : all)
-		// 	if(i.getRole().equals(role))
-		// 		byRole.add(i);
+		// if(i.getRole().equals(role))
+		// byRole.add(i);
 
 		// return byRole;
 		return dao.getUserByRole(role);

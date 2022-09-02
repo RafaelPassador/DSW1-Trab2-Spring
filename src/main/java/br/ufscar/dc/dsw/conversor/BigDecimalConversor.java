@@ -12,9 +12,9 @@ public class BigDecimalConversor implements Converter<String, BigDecimal> {
 		if (text.isEmpty()) {
 			return null;
 		} else {
-			text = text.replace(',','.');	
+			text = text.replace(',', '.');
 		}
-		
+
 		return new BigDecimal(Double.parseDouble(text));
 	}
 

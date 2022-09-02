@@ -21,14 +21,14 @@ public class CarroService implements ICarroService {
 
 	@Autowired
 	IPropostaDAO pdao;
-	
+
 	public void salvar(Carro carro) {
 		dao.save(carro);
 	}
 
 	public void excluir(Long id) {
-		for(Proposta p : pdao.findAll())
-			if(p.getCarro().getId() == id)
+		for (Proposta p : pdao.findAll())
+			if (p.getCarro().getId() == id)
 				pdao.deleteById(p.getId());
 		dao.deleteById(id);
 	}

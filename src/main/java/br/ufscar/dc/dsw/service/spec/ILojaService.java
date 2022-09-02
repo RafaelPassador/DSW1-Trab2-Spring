@@ -5,12 +5,12 @@ import java.util.List;
 import br.ufscar.dc.dsw.domain.Loja;
 
 public interface ILojaService {
-    
-    Loja buscarPorId(Long id);
 
-    List<Loja> buscarTodos();
+	Loja buscarPorId(Long id);
 
-    void salvar(Loja loja);
+	List<Loja> buscarTodos();
 
-    void excluir(Long id);
+	void salvar(Loja loja);
+
+	void excluir(Long id);
 }
