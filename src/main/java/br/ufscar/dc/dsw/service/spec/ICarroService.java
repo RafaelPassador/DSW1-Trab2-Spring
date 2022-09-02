@@ -14,4 +14,6 @@ public interface ICarroService {
 
 	void excluir(Long id);
 
+	List<String> searchImages(String paths);
+
 }
