@@ -6,9 +6,7 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.ufscar.dc.dsw.dao.ILojaDAO;
 import br.ufscar.dc.dsw.dao.IUsuarioDAO;
-import br.ufscar.dc.dsw.domain.Loja;
 import br.ufscar.dc.dsw.domain.Usuario;
 
 @Component
