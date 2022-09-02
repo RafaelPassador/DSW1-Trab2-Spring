@@ -1,6 +1,8 @@
 package br.ufscar.dc.dsw.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,5 +43,20 @@ public class CarroService implements ICarroService {
 	@Transactional(readOnly = true)
 	public List<Carro> searchAll() {
 		return dao.findAll();
+	}
+
+	@Override
+	public List<String> searchImages(String paths) {
+
+		String[] imagens;
+		List<String> listImagens = new ArrayList<>();
+
+		if (paths != null && paths.split("\\|").length > 0) {
+			imagens = paths.split("\\|");
+
+			listImagens = Arrays.asList(imagens);
+		}
+
+		return listImagens;
 	}
 }
