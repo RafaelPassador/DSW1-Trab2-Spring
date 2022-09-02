@@ -7,7 +7,7 @@ import br.ufscar.dc.dsw.domain.Fotografia;
 public interface IFotografiaService {
 	Fotografia searchById(Long id);
 
-	List<Fotografia> buscarTodosCarro(Long carroId);
+	List<Fotografia> buscarTodos();
 
 	void salvar(Fotografia fotografia);
 

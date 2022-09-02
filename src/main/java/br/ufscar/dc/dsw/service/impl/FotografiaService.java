@@ -26,13 +26,8 @@ public class FotografiaService implements IFotografiaService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Fotografia> buscarTodosCarro(Long carroId) {
-		List<Fotografia> all = dao.findAll();
-		List<Fotografia> out = new ArrayList<>();
-		for (Fotografia i : all)
-			if (i.carro.getId() == carroId)
-				out.add(i);
-		return out;
+	public List<Fotografia> buscarTodos() {
+		return dao.findAll();
 	}
 
 	@Override

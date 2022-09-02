@@ -11,7 +11,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -26,9 +25,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.domain.Carro;
+import br.ufscar.dc.dsw.domain.Fotografia;
 import br.ufscar.dc.dsw.service.spec.IUsuarioService;
-import br.ufscar.dc.dsw.utils.FileUploadUtil;
 import br.ufscar.dc.dsw.service.spec.ICarroService;
+import br.ufscar.dc.dsw.service.spec.IFotografiaService;
 
 @Controller
 @RequestMapping("/carros")
@@ -36,6 +36,9 @@ public class CarroController {
 
 	@Autowired
 	private ICarroService carroService;
+
+	@Autowired
+	private IFotografiaService fotografiaService;
 
 	@Autowired
 	private IUsuarioService usuarioService;
@@ -161,37 +164,26 @@ public class CarroController {
 
 	// @PostMapping("/salvar")
 	public String saveCarPhoto(Carro carro, @RequestParam("image") MultipartFile multipartFile) throws IOException {
-
-		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		carro.setPictures(fileName);
-
-		System.out.println("ARQUIVIN AQUI" + carro.getPictures());
-		System.out.println("ARQUIVIN AQUI" + carro.getPlaca());
-		carroService.salvar(carro);
-		System.out.println("ARQUIVIN AQUI" + carro.getId() + "SALVO");
-		// Carro savedCarro = repo.save(carro);
-
-		String uploadDir = "carros-fotos/" + carro.getId();
-
-		FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-
+		Fotografia fotografia = new Fotografia();
+		fotografia.carro = carro;
+		fotografia.data = multipartFile.getBytes();
+		fotografia.mimetype = multipartFile.getContentType();
+		fotografiaService.salvar(fotografia);
 		return "redirect:/carros/listar";
 	}
 
 	@ModelAttribute("pictures")
 	public Map<Long, List<String>> listaFotos() {
 		Map<Long, List<String>> mapPhoto = new HashMap<>();
-		System.out.println(carroService.searchAll().size() + "TAMANHAO");
 
-		for (Carro carro : carroService.searchAll()) {
-			List<String> carPics = carroService.searchImages(carro.getPictures());
-			if (carPics != null)
-				mapPhoto.put(carro.getId(), carPics);
+		for (Fotografia fotografia : fotografiaService.buscarTodos()) {
+			List<String> imagens = mapPhoto.get(fotografia.carro.getId());
+			if (imagens == null) {
+				imagens = new ArrayList<>();
+				mapPhoto.put(fotografia.carro.getId(), imagens);
+			}
+			imagens.add("/fotos/" + fotografia.getId());
 		}
-		System.out.println("SO VAMO VER ESSAS FOTO");
-
-		for (Long l : mapPhoto.keySet())
-			System.out.println(mapPhoto.get(l));
 
 		return mapPhoto;
 	}
