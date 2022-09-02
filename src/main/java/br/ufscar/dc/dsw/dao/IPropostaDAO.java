@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import br.ufscar.dc.dsw.domain.Proposta;
+import br.ufscar.dc.dsw.domain.PropostaId;
 
 @SuppressWarnings("unchecked")
 public interface IPropostaDAO extends CrudRepository<Proposta, Long>{

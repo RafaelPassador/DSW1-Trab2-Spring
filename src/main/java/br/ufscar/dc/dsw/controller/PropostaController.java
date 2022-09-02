@@ -3,6 +3,7 @@ package br.ufscar.dc.dsw.controller;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.io.IOException;
@@ -30,7 +31,6 @@ import br.ufscar.dc.dsw.service.spec.IUsuarioService;
 import br.ufscar.dc.dsw.service.impl.UsuarioService;
 import br.ufscar.dc.dsw.service.spec.ICarroService;
 import br.ufscar.dc.dsw.service.spec.IPropostaService;
-import br.ufscar.dc.Utils.FileUploadUtil;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,7 +50,7 @@ public class PropostaController {
 	@Autowired
 	private IUsuarioService usuarioService;
 
-	private Proposta gamb;
+	private Proposta gamb, gamb2;
 
 	@GetMapping("/cadastrar")
 	public String cadastrar(Carro carro) {
@@ -59,10 +59,27 @@ public class PropostaController {
 
 	@GetMapping("/listar")
 	public String listar(ModelMap model, Principal principal) {
-		
-		System.out.println("ATE ENTROU");
-		model.addAttribute("propostas", propService.buscarTodos());
-		System.out.println("ATE AQUI VEIO22");
+
+		Usuario user = usuarioService.buscarPorUsuario(principal.getName());
+		int role = 0;
+		switch(user.getRole()){
+			case "ROLE_USER":
+				role = 0;
+			break;
+			case "ROLE_STORE":
+				role = 1;
+			break;
+			case "ROLE_ADMIN":
+				role = 2;
+			break;
+		}
+
+		model.addAttribute("visitingRole", role);
+		List<Proposta> myOffers = new ArrayList<>();
+		for(Proposta p : propService.buscarTodos())
+			if((role == 0 && p.getUsuario().getId() == user.getId()) || (role == 1 && p.getLoja().getId() == user.getId()))
+				myOffers.add(p);
+		model.addAttribute("propostas", myOffers);
 		
 		return "proposta/lista";
 	}
@@ -102,11 +119,24 @@ public class PropostaController {
 	}
 
 	@GetMapping("/comprar/{id}")
-	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
+	public String preComprar(@PathVariable("id") Long id, ModelMap model, Principal principal, RedirectAttributes attr) {
         Carro carro = carroService.searchById(id);
 		model.addAttribute("carro", carro);
         Proposta nova = new Proposta();
         Usuario store = usuarioService.buscarPorId(carro.getLoja().getId());
+        Usuario user = usuarioService.buscarPorUsuario(principal.getName());
+		for(Proposta p : propService.buscarTodos()){
+			if(p.getCarro().getPlaca().equals(carro.getPlaca()) && p.getUsuario().getId() == user.getId() && p.getEstado().toLowerCase().equals("aberto")){
+				attr.addFlashAttribute("fail", "proposta.repetida.fail");
+				return "redirect:/carros/listar";
+				// return "carro/lista";
+			}
+			if(p.getCarro().getPlaca().equals(carro.getPlaca()) && p.getUsuario().getId() == user.getId() && p.getEstado().toLowerCase().equals("aceita")){
+				attr.addFlashAttribute("fail", "proposta.comprada.fail");
+				return "redirect:/carros/listar";
+				// return "carro/lista";
+			}
+		}
         nova.setLoja(store);
         nova.setCarro(carro);
 		gamb = nova;
@@ -115,28 +145,49 @@ public class PropostaController {
 		return "proposta/cadastro";
 	}
 
-	@PostMapping("/editar")
-	public String editar(@Valid Carro carro, BindingResult result, RedirectAttributes attr, Principal principal) {
-
-		Usuario loja =  usuarioService.buscarPorUsuario(principal.getName());
-		
-		if (result.getFieldErrorCount() > 1 || result.getFieldError("placa") == null) {
-			return "carro/cadastro";
+	@GetMapping("/editar/{id}")
+	public String preEditar(@PathVariable("id") Long id, ModelMap model, Principal principal, RedirectAttributes attr) {
+		gamb2 = propService.buscarPorId(id);
+		for(Proposta pro : propService.buscarTodos()){
+			if(gamb2.getId() == pro.getId() && !pro.getEstado().toLowerCase().equals("aberto")){
+				attr.addFlashAttribute("fail", "proposta.resposta.fail");
+				return "redirect:/propostas/listar";
+			}
 		}
-		
-		carro.setLoja(loja);
-		
-		carroService.salvar(carro);
-		System.out.println("TCHAU MUNDO2");
-		attr.addFlashAttribute("sucess", "carro.edit.sucess");
-		return "redirect:/carros/listar";
+		model.addAttribute("proposta", gamb2);
+		return "proposta/resposta";
 	}
 
-	@GetMapping("/excluir/{id}")
+	@PostMapping("/editar")
+	public String editar(@Valid Proposta proposta, BindingResult result, RedirectAttributes attr, Principal principal) {
+
+		int okay = result.getFieldErrorCount("valor") + result.getFieldErrorCount("condicoes");
+		if (result.getErrorCount() > okay) {
+			for(ObjectError o : result.getAllErrors())
+				System.out.println(o.getDefaultMessage());
+			return "proposta/resposta";
+		}
+		
+		gamb2.setContraproposta(proposta.getContraproposta());	
+		gamb2.setEstado("NÃO ACEITO");	
+		propService.salvar(gamb2);
+		attr.addFlashAttribute("sucess", "proposta.edit.sucess");
+		return "redirect:/propostas/listar";
+	}
+
+	@GetMapping("/aceitar/{id}")
 	public String excluir(@PathVariable("id") Long id, RedirectAttributes attr) {
-		carroService.excluir(id);
-		attr.addFlashAttribute("sucess", "carro.delete.sucess");
-		return "redirect:/carros/listar";
+		Proposta p = propService.buscarPorId(id);
+		for(Proposta pro : propService.buscarTodos()){
+			if(p.getId() == pro.getId() && !pro.getEstado().toLowerCase().equals("aberto")){
+				attr.addFlashAttribute("fail", "proposta.resposta.fail");
+				return "redirect:/propostas/listar";
+			}
+		}
+		p.setEstado("ACEITA");
+		propService.salvar(p);
+		attr.addFlashAttribute("sucess", "proposta.aceita.sucess");
+		return "redirect:/propostas/listar";
 	}
 
 	@ModelAttribute("lojas")
@@ -144,23 +195,9 @@ public class PropostaController {
 		return usuarioService.buscarTodos();
 	}
 
-	//@Autowired
-    //private UserRepository repo;
+	
 
-	@PostMapping("/carros/salvar")
-    public RedirectView saveCarPhoto(Carro carro, @RequestParam("image") MultipartFile multipartFile) throws IOException {
-         
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        carro.setPictures(fileName);
-         
-        //Carro savedCarro = repo.save(carro);
- 
-        String uploadDir = "carros-fotos/" + carro.getId();
- 
-        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
-        return new RedirectView("/carros", true);
-    }
  
     // other fields and getters, setters are not shown 
 }

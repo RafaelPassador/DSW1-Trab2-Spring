@@ -1,7 +1,10 @@
 package br.ufscar.dc.dsw.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.io.IOException;
 
 import javax.validation.Valid;
@@ -25,8 +28,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.domain.Carro;
 import br.ufscar.dc.dsw.service.spec.IUsuarioService;
+import br.ufscar.dc.dsw.utils.FileUploadUtil;
 import br.ufscar.dc.dsw.service.spec.ICarroService;
-import br.ufscar.dc.Utils.FileUploadUtil;
 
 @Controller
 @RequestMapping("/carros")
@@ -38,6 +41,8 @@ public class CarroController {
 	@Autowired
 	private IUsuarioService usuarioService;
 
+	String gamb;
+
 	@GetMapping("/cadastrar")
 	public String cadastrar(Carro carro) {
 		return "carro/cadastro";
@@ -45,25 +50,35 @@ public class CarroController {
 
 	@GetMapping("/listar")
 	public String listar(ModelMap model, Principal principal) {
-		
-		Usuario user = usuarioService.buscarPorUsuario(principal.getName());
+		List<Carro> Cars = carroService.searchAll();
+		System.out.println("Entrou");
+		if(principal != null){
 
-		int role = 0;
-		switch(user.getRole()){
-			case "ROLE_USER":
-				role = 0;
-			break;
-			case "ROLE_STORE":
-				role = 1;
-			break;
-			case "ROLE_ADMIN":
-				role = 2;
-			break;
+			Usuario user = usuarioService.buscarPorUsuario(principal.getName());
+			int role = -1;
+			switch(user.getRole()){
+				case "ROLE_USER":
+					role = 0;
+				break;
+				case "ROLE_STORE":
+					role = 1;
+				break;
+				case "ROLE_ADMIN":
+					role = 2;
+				break;
+			}
+			if(role == 1){
+				List<Carro> storeCars = new ArrayList<>();
+				for(Carro c : carroService.searchAll())
+					if(c.getLoja().getId() == user.getId())
+						storeCars.add(c);
+				
+				Cars = storeCars;
+			}
+			model.addAttribute("visitingRole", role);
 		}
-
-		model.addAttribute("visitingRole", role);
-		model.addAttribute("carros", carroService.searchAll());
-		System.out.println("ATE AQUI VEIO2");
+		model.addAttribute("carros", Cars);
+		System.out.println("ATE AQUI VEIO2 = " + Cars.size());
 		
 		return "carro/lista";
 	}
@@ -72,13 +87,15 @@ public class CarroController {
 	@PostMapping("/salvar")
 	public String salvar(@Valid Carro carro , BindingResult result, RedirectAttributes attr, Principal principal, @RequestParam("image") MultipartFile file) throws IOException {
 
-		System.out.println("Entrouu");
+		System.out.println("Entrouu salva");
 		Usuario loja =  usuarioService.buscarPorUsuario(principal.getName());
 
 		// System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + principal.getName());
 
 		
 		if (result.hasErrors()) {
+			for(ObjectError o : result.getAllErrors())
+				System.out.println(o.getDefaultMessage());
 			return "carro/cadastro";
 		}
 
@@ -93,25 +110,34 @@ public class CarroController {
 
 	@GetMapping("/editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
-		model.addAttribute("carro", carroService.searchById(id));
+		Carro car = carroService.searchById(id);
+		if(car.getPictures() != null)
+			gamb = car.getPictures();
+		else
+			gamb = "";
+		if(!gamb.isEmpty())
+			gamb = gamb.substring(0, gamb.length()-1);
+		model.addAttribute("carro", car);
 		return "carro/cadastro";
 	}
 
 	@PostMapping("/editar")
-	public String editar(@Valid Carro carro, BindingResult result, RedirectAttributes attr, Principal principal) {
-
+	public String editar(@Valid Carro carro, BindingResult result, RedirectAttributes attr, Principal principal, @RequestParam("image") MultipartFile file) throws IOException{
+		if(!gamb.isEmpty())
+			carro.setPictures(gamb);
+		System.out.println("Editandoo" + carro.getPictures());
 		Usuario loja =  usuarioService.buscarPorUsuario(principal.getName());
 		
 		if (result.getFieldErrorCount() > 1 || result.getFieldError("placa") == null) {
 			return "carro/cadastro";
 		}
-		
 		carro.setLoja(loja);
 		
 		carroService.salvar(carro);
-		System.out.println("TCHAU MUNDO2");
+		System.out.println("TCHAU MUNDO2" + carro.getPictures());
 		attr.addFlashAttribute("sucess", "carro.edit.sucess");
-		return "redirect:/carros/listar";
+		// return "redirect:/carros/listar";
+		return saveCarPhoto(carro, file);
 	}
 
 	@GetMapping("/excluir/{id}")
@@ -132,8 +158,10 @@ public class CarroController {
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         carro.setPictures(fileName);
 		
-		System.out.println(carro.getPictures());
-         
+		System.out.println("ARQUIVIN AQUI" + carro.getPictures());
+		System.out.println("ARQUIVIN AQUI" + carro.getPlaca());
+        carroService.salvar(carro);
+		System.out.println("ARQUIVIN AQUI" + carro.getId() + "SALVO");
         //Carro savedCarro = repo.save(carro);
  
         String uploadDir = "carros-fotos/" + carro.getId();
@@ -142,6 +170,24 @@ public class CarroController {
 
 		return "redirect:/carros/listar";
     }
+
+	@ModelAttribute("pictures")
+	public Map<Long, List<String>> listaFotos() {
+		Map<Long, List<String>> mapPhoto = new HashMap<>();
+		System.out.println(carroService.searchAll().size() + "TAMANHAO");
+		for(Carro c : carroService.searchAll()){
+			List<String> carPics = c.getFotosImagePath();
+			if(carPics != null)
+				mapPhoto.put(c.getId(), carPics);
+		}
+		System.out.println("SO VAMO VER ESSAS FOTO");
+
+		for(Long l : mapPhoto.keySet())
+			System.out.println(mapPhoto.get(l));
+
+		return mapPhoto;
+	}
+
  
     // other fields and getters, setters are not shown 
 }

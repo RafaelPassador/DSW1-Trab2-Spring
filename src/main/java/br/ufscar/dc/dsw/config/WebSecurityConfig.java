@@ -38,12 +38,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.authenticationProvider(authenticationProvider());
 	}
 
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 				http.authorizeRequests()
-				.antMatchers("/error", "/login/**", "/js/**", "/css/**", "/image/**", "/webjars/**", "/carros/**").permitAll()
-				.antMatchers("/compras/**").hasRole("USER")
-				.antMatchers("/editoras/**", "/livros/**", "/usuarios/**, /clientes/**, lojas/**").hasRole("ADMIN")
+				.antMatchers("/error", "/login/**", "/js/**", "/css/**", "/image/**", "/webjars/**", "/carros-fotos/**", "/carros/listar", "/home").permitAll()
+				.antMatchers("/propostas/listar").hasAnyRole("USER", "STORE")
+				.antMatchers("/propostas/comprar/**", "/propostas/salvar").hasRole("USER")
+				.antMatchers("/propostas/aceitar/**", "/propostas/editar/**", "/propostas/aceitar").hasRole("STORE")
+				.antMatchers("/usuarios/**, /clientes/**, lojas/**").hasRole("ADMIN")
+				.antMatchers("/carros/**").hasRole("STORE")
 				.anyRequest().authenticated()
 			.and()
 				.formLogin()
@@ -52,7 +56,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.logout()
 				.logoutSuccessUrl("/")
-				.permitAll();
-				
+				.permitAll().and().exceptionHandling().accessDeniedPage("/403");
 	}
 }

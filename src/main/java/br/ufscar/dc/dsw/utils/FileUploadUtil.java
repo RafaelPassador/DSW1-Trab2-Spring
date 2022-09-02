@@ -1,4 +1,4 @@
-package br.ufscar.dc.Utils;
+package br.ufscar.dc.dsw.utils;
  
 import java.io.*;
 import java.nio.file.*;

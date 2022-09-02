@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.ufscar.dc.dsw.dao.ICarroDAO;
+import br.ufscar.dc.dsw.dao.IPropostaDAO;
 import br.ufscar.dc.dsw.domain.Carro;
+import br.ufscar.dc.dsw.domain.Proposta;
 import br.ufscar.dc.dsw.service.spec.ICarroService;
 
 @Service
@@ -16,12 +18,18 @@ public class CarroService implements ICarroService {
 
 	@Autowired
 	ICarroDAO dao;
+
+	@Autowired
+	IPropostaDAO pdao;
 	
 	public void salvar(Carro carro) {
 		dao.save(carro);
 	}
 
 	public void excluir(Long id) {
+		for(Proposta p : pdao.findAll())
+			if(p.getCarro().getId() == id)
+				pdao.deleteById(p.getId());
 		dao.deleteById(id);
 	}
 

@@ -21,7 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "Proposta")
+// @Table(name = "Proposta")
 @IdClass(PropostaId.class)
 public class Proposta extends AbstractEntity<Long>{
     
@@ -52,13 +52,13 @@ public class Proposta extends AbstractEntity<Long>{
     @JoinColumn(name = "loja_id")
     private Usuario loja;
 
-    @Id
+    // @Id
     // @NotNull(message = "{NotNull.carro.loja}")
     @ManyToOne
     @JoinColumn(name = "carro_id")
     private Carro carro;
  
-    @Id
+    // @Id
     // @NotNull(message = "{NotNull.carro.loja}")
     @ManyToOne
     @JoinColumn(name = "usuario_id")

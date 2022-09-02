@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.ufscar.dc.dsw.dao.ICarroDAO;
+import br.ufscar.dc.dsw.dao.IPropostaDAO;
 import br.ufscar.dc.dsw.dao.IUsuarioDAO;
+import br.ufscar.dc.dsw.domain.Carro;
+import br.ufscar.dc.dsw.domain.Proposta;
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.service.spec.IUsuarioService;
 
@@ -18,11 +22,24 @@ public class UsuarioService implements IUsuarioService {
 	@Autowired
 	IUsuarioDAO dao;
 
+	@Autowired
+	IPropostaDAO pdao;
+
+	@Autowired
+	ICarroDAO cdao;
+
 	public void salvar(Usuario usuario) {
 		dao.save(usuario);
 	}
 
 	public void excluir(Long id) {
+		for(Carro c : cdao.findAll())
+			if(c.getLoja().getId() == id)
+				cdao.deleteById(c.getId());
+		for(Proposta p : pdao.findAll())
+			if(p.getLoja().getId() == id || p.getUsuario().getId() == id)
+				pdao.deleteById(p.getId());
+		
 		dao.deleteById(id);
 	}
 

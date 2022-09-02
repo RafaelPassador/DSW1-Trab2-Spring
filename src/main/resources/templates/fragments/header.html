@@ -19,6 +19,16 @@
 							</div>
 						</form>
 					</div>
+					<div sec:authorize="isAnonymous()" style="right: 10px; position: absolute">
+						<form th:action="@{/login}" method="get">
+							<div class="row">
+								<div class="col-sm-12 col-sm-offset-3">
+									<input type="submit" name="login-submit" id="login-submit"
+									class="form-control btn btn-info" value="Login">
+								</div>
+							</div>
+						</form>
+					</div>
 					<div style="right: 100px; position: absolute">
 						<a th:href="@{''(lang=pt)}"><img alt=""
 							th:src="@{/image/Brasil.gif}" style="width: 30px;" /></a> <a
