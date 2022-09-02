@@ -8,19 +8,19 @@ import br.ufscar.dc.dsw.domain.Carro;
 import br.ufscar.dc.dsw.service.spec.ICarroService;
 
 @Component
-public class CarroConversor implements Converter<String, Carro>{
+public class CarroConversor implements Converter<String, Carro> {
 
 	@Autowired
 	private ICarroService service;
-	
+
 	@Override
 	public Carro convert(String text) {
-		
+
 		if (text.isEmpty()) {
-		 return null;	
+			return null;
 		}
-		
-		Long id = Long.valueOf(text);	
+
+		Long id = Long.valueOf(text);
 		return service.searchById(id);
 	}
 }

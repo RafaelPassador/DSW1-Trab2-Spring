@@ -45,45 +45,44 @@ public class CarroController {
 
 	@GetMapping("/listar")
 	public String listar(ModelMap model, Principal principal) {
-		
+
 		Usuario user = usuarioService.buscarPorUsuario(principal.getName());
 
 		int role = 0;
-		switch(user.getRole()){
+		switch (user.getRole()) {
 			case "ROLE_USER":
 				role = 0;
-			break;
+				break;
 			case "ROLE_STORE":
 				role = 1;
-			break;
+				break;
 			case "ROLE_ADMIN":
 				role = 2;
-			break;
+				break;
 		}
 
 		model.addAttribute("visitingRole", role);
 		model.addAttribute("carros", carroService.searchAll());
 		System.out.println("ATE AQUI VEIO2");
-		
+
 		return "carro/lista";
 	}
 
-
 	@PostMapping("/salvar")
-	public String salvar(@Valid Carro carro , BindingResult result, RedirectAttributes attr, Principal principal, @RequestParam("image") MultipartFile file) throws IOException {
+	public String salvar(@Valid Carro carro, BindingResult result, RedirectAttributes attr, Principal principal,
+			@RequestParam("image") MultipartFile file) throws IOException {
 
 		System.out.println("Entrouu");
-		Usuario loja =  usuarioService.buscarPorUsuario(principal.getName());
+		Usuario loja = usuarioService.buscarPorUsuario(principal.getName());
 
-		// System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + principal.getName());
+		// System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+		// principal.getName());
 
-		
 		if (result.hasErrors()) {
 			return "carro/cadastro";
 		}
 
 		carro.setLoja(loja);
-		
 
 		carroService.salvar(carro);
 		attr.addFlashAttribute("sucess", "carro.create.sucess");
@@ -100,14 +99,14 @@ public class CarroController {
 	@PostMapping("/editar")
 	public String editar(@Valid Carro carro, BindingResult result, RedirectAttributes attr, Principal principal) {
 
-		Usuario loja =  usuarioService.buscarPorUsuario(principal.getName());
-		
+		Usuario loja = usuarioService.buscarPorUsuario(principal.getName());
+
 		if (result.getFieldErrorCount() > 1 || result.getFieldError("placa") == null) {
 			return "carro/cadastro";
 		}
-		
+
 		carro.setLoja(loja);
-		
+
 		carroService.salvar(carro);
 		System.out.println("TCHAU MUNDO2");
 		attr.addFlashAttribute("sucess", "carro.edit.sucess");
@@ -126,22 +125,22 @@ public class CarroController {
 		return usuarioService.buscarTodos();
 	}
 
-	//@PostMapping("/salvar")
-    public String saveCarPhoto(Carro carro, @RequestParam("image") MultipartFile multipartFile) throws IOException {
-         
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        carro.setPictures(fileName);
-		
+	// @PostMapping("/salvar")
+	public String saveCarPhoto(Carro carro, @RequestParam("image") MultipartFile multipartFile) throws IOException {
+
+		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+		carro.setPictures(fileName);
+
 		System.out.println(carro.getPictures());
-         
-        //Carro savedCarro = repo.save(carro);
- 
-        String uploadDir = "carros-fotos/" + carro.getId();
- 
-        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
+		// Carro savedCarro = repo.save(carro);
+
+		String uploadDir = "carros-fotos/" + carro.getId();
+
+		FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
 		return "redirect:/carros/listar";
-    }
- 
-    // other fields and getters, setters are not shown 
+	}
+
+	// other fields and getters, setters are not shown
 }

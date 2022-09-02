@@ -14,30 +14,30 @@ import br.ufscar.dc.dsw.service.spec.IClienteService;
 @Transactional(readOnly = false)
 public class ClienteService implements IClienteService {
 
-    @Autowired
-    IClienteDAO dao;
+	@Autowired
+	IClienteDAO dao;
 
-    @Transactional(readOnly = true)
-    public Cliente buscarPorId(Long id) {
-        return dao.findById(id.longValue());
-    }
+	@Transactional(readOnly = true)
+	public Cliente buscarPorId(Long id) {
+		return dao.findById(id.longValue());
+	}
 
-    @Transactional(readOnly = true)
-    public List<Cliente> buscarTodos() {
-        // TODO Auto-generated method stub
-        return dao.findAll();
-    }
+	@Transactional(readOnly = true)
+	public List<Cliente> buscarTodos() {
+		// TODO Auto-generated method stub
+		return dao.findAll();
+	}
 
-    @Override
-    public void salvar(Cliente cliente) {
-        // TODO Auto-generated method stub
-        dao.save(cliente);
-    }
+	@Override
+	public void salvar(Cliente cliente) {
+		// TODO Auto-generated method stub
+		dao.save(cliente);
+	}
 
-    @Override
-    public void excluir(Long id) {
-        // TODO Auto-generated method stub
-        dao.deleteById(id);
-    }
-    
+	@Override
+	public void excluir(Long id) {
+		// TODO Auto-generated method stub
+		dao.deleteById(id);
+	}
+
 }

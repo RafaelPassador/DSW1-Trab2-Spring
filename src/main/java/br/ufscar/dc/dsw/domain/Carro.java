@@ -19,80 +19,88 @@ import br.ufscar.dc.dsw.validation.UniquePlate;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Carro")
-public class Carro extends AbstractEntity<Long>{
-    //   loja_id bigint not null, primary key(placa), foreign key(loja_id) references Loja(id) on delete cascade)
+public class Carro extends AbstractEntity<Long> {
+	// loja_id bigint not null, primary key(placa), foreign key(loja_id) references
+	// Loja(id) on delete cascade)
 
-    @UniquePlate(message = "{Unique.car.placa}")
-    @NotBlank(message = "{NotBlank.carro.placa}")
-    @Size(min = 7, max = 7)
-    @Column(nullable = false, unique = true, length = 7)
-    private String placa;
-    
-    @NotBlank(message = "{NotBlank.carro.modelo}")
-    @Size(max = 128)
-    @Column(nullable = false, length = 128)
-    private String modelo;
-    
-    @NotBlank(message = "{NotBlank.carro.chassi}")
-    @Size(max = 64)
-    @Column(nullable = false, length = 64)
-    private String chassi;
+	@UniquePlate(message = "{Unique.car.placa}")
+	@NotBlank(message = "{NotBlank.carro.placa}")
+	@Size(min = 7, max = 7)
+	@Column(nullable = false, unique = true, length = 7)
+	private String placa;
 
-    @NotNull(message = "{NotNull.carro.ano}")
+	@NotBlank(message = "{NotBlank.carro.modelo}")
+	@Size(max = 128)
+	@Column(nullable = false, length = 128)
+	private String modelo;
+
+	@NotBlank(message = "{NotBlank.carro.chassi}")
+	@Size(max = 64)
+	@Column(nullable = false, length = 64)
+	private String chassi;
+
+	@NotNull(message = "{NotNull.carro.ano}")
 	@Column(nullable = false, length = 5)
 	private Integer ano;
 
-    @NotNull(message = "{NotNull.carro.km}")
+	@NotNull(message = "{NotNull.carro.km}")
 	@Column(nullable = false, columnDefinition = "DECIMAL(8,2) DEFAULT 0.0")
 	private BigDecimal quilometragem;
 
-    @NotBlank(message = "{NotBlank.carro.descricao}")
-    @Size(max = 512)
-    @Column(nullable = false, length = 512)
-    private String descricao;
+	@NotBlank(message = "{NotBlank.carro.descricao}")
+	@Size(max = 512)
+	@Column(nullable = false, length = 512)
+	private String descricao;
 
-    @NotNull(message = "{NotNull.carro.valor}")
+	@NotNull(message = "{NotNull.carro.valor}")
 	@Column(nullable = false, columnDefinition = "DECIMAL(8,2) DEFAULT 0.0")
 	private BigDecimal valor;
 
-    @Column(nullable = true, length = 64)//pictures path
-    private String pictures;
+	@Column(nullable = true, length = 64) // pictures path
+	private String pictures;
 
-    // @NotNull(message = "{NotNull.carro.loja}")
-    @ManyToOne
-    @JoinColumn(name = "loja_id")
-    private Usuario loja;
+	// @NotNull(message = "{NotNull.carro.loja}")
+	@ManyToOne
+	@JoinColumn(name = "loja_id")
+	private Usuario loja;
 
-    @Transient
-    private List<String> picturesList = new ArrayList<>();
+	@Transient
+	private List<String> picturesList = new ArrayList<>();
 
-    @Transient
-    public List<String> getPicturesList() {
-        return picturesList;
-    }
+	@Transient
+	public List<String> getPicturesList() {
+		return picturesList;
+	}
 
-    public Integer getAno() {
-        return ano;
-    }
-    public String getChassi() {
-        return chassi;
-    }
-    public String getDescricao() {
-        return descricao;
-    }
-    public Usuario getLoja() {
-    return loja;
-    }
-    public String getModelo() {
-        return modelo;
-    }
-    public String getPlaca() {
-        return placa;
-    }
-    public BigDecimal getQuilometragem() {
-        return quilometragem;
-    }
-    public BigDecimal getValor() {
+	public Integer getAno() {
+		return ano;
+	}
+
+	public String getChassi() {
+		return chassi;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public Usuario getLoja() {
+		return loja;
+	}
+
+	public String getModelo() {
+		return modelo;
+	}
+
+	public String getPlaca() {
+		return placa;
+	}
+
+	public BigDecimal getQuilometragem() {
+		return quilometragem;
+	}
+
+	public BigDecimal getValor() {
 		return valor;
 	}
 
@@ -100,41 +108,48 @@ public class Carro extends AbstractEntity<Long>{
 		this.valor = valor;
 	}
 
-    public String getPictures() {
-        return pictures;
-    }
+	public String getPictures() {
+		return pictures;
+	}
 
-    public void setPictures(String pictures) {
-        this.pictures += pictures;
-        this.picturesList.add(pictures);
-    }
+	public void setPictures(String pictures) {
+		this.pictures += pictures;
+		this.picturesList.add(pictures);
+	}
 
-    public void setAno(Integer ano) {
-        this.ano = ano;
-    }
-    public void setChassi(String chassi) {
-        this.chassi = chassi;
-    }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-    public void setLoja(Usuario loja) {
-        this.loja = loja;
-    }
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
-    public void setQuilometragem(BigDecimal quilometragem) {
-        this.quilometragem = quilometragem;
-    }
+	public void setAno(Integer ano) {
+		this.ano = ano;
+	}
 
-    @Transient
-    public String getFotosImagePath(int index) {
-        if (pictures == null || getId() == null) return null;
-         
-        return "/carros-fotos/" + getId() + "/" + picturesList.get(index);
-    }
+	public void setChassi(String chassi) {
+		this.chassi = chassi;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public void setLoja(Usuario loja) {
+		this.loja = loja;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+
+	public void setPlaca(String placa) {
+		this.placa = placa;
+	}
+
+	public void setQuilometragem(BigDecimal quilometragem) {
+		this.quilometragem = quilometragem;
+	}
+
+	@Transient
+	public String getFotosImagePath(int index) {
+		if (pictures == null || getId() == null)
+			return null;
+
+		return "/carros-fotos/" + getId() + "/" + picturesList.get(index);
+	}
 }

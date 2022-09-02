@@ -10,20 +10,20 @@ import br.ufscar.dc.dsw.domain.Usuario;
 
 @SuppressWarnings("unchecked")
 public interface IUsuarioDAO extends CrudRepository<Usuario, Long> {
-	
+
 	Usuario findById(long id);
 
 	List<Usuario> findAll();
-	
+
 	Usuario save(Usuario usuario);
 
-    Usuario findByCPF(String cPF);
+	Usuario findByCPF(String cPF);
 
 	void deleteById(Long id);
-	
-    @Query("SELECT u FROM Usuario u WHERE u.username = :username")
-    public Usuario getUserByUsername(@Param("username") String username);	
-	
-    @Query("SELECT u FROM Usuario u WHERE u.role = :role")
-    public List<Usuario> getUserByRole(@Param("role") String role);	
+
+	@Query("SELECT u FROM Usuario u WHERE u.username = :username")
+	public Usuario getUserByUsername(@Param("username") String username);
+
+	@Query("SELECT u FROM Usuario u WHERE u.role = :role")
+	public List<Usuario> getUserByRole(@Param("role") String role);
 }

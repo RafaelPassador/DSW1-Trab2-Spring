@@ -25,55 +25,58 @@ import br.ufscar.dc.dsw.service.spec.IUsuarioService;
 @Controller
 @RequestMapping("/usuarios")
 public class UsuarioController {
-	
+
 	@Autowired
 	private IUsuarioService service;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder encoder;
-	
+
 	@GetMapping("/cadastrarLoja")
 	public String cadastrarLoja(Usuario usuario, ModelMap model) {
 		model.addAttribute("type", 0);
 		return "usuario/cadastroL";
 	}
+
 	@GetMapping("/cadastrarCliente")
 	public String cadastrarCliente(Usuario usuario, ModelMap model) {
 		model.addAttribute("type", 1);
 		return "usuario/cadastroC";
 	}
-	
+
 	@GetMapping("/listarCliente")
 	public String listarCliente(ModelMap model) {
-		model.addAttribute("usuarios",service.buscarTodosRoles("ROLE_USER"));
+		model.addAttribute("usuarios", service.buscarTodosRoles("ROLE_USER"));
 		return "usuario/listaC";
 	}
+
 	@GetMapping("/listarLoja")
 	public String listarLoja(ModelMap model) {
-		model.addAttribute("usuarios",service.buscarTodosRoles("ROLE_STORE"));
+		model.addAttribute("usuarios", service.buscarTodosRoles("ROLE_STORE"));
 		return "usuario/listaL";
 	}
-	
+
 	@PostMapping("/salvar")
-	// public String salvar(@Valid Cliente usuario, BindingResult result, RedirectAttributes attr) {
+	// public String salvar(@Valid Cliente usuario, BindingResult result,
+	// RedirectAttributes attr) {
 	public String salvar(@Valid Usuario usuario, BindingResult result, RedirectAttributes attr) {
-		
+
 		// System.out.println("HELLOOOOOO");sssss
 		boolean red = usuario.getCPF().length() > 14;
 		if (result.hasErrors()) {
-				return "usuario/cadastro" + (red ? "L" : "C");
+			return "usuario/cadastro" + (red ? "L" : "C");
 		}
-		 
+
 		// Usuario usuario = (Usuario) usuario2;
 
 		// System.out.println("password = " + usuario.getPassword());
-		
+
 		usuario.setPassword(encoder.encode(usuario.getPassword()));
 		service.salvar(usuario);
 		attr.addFlashAttribute("sucess", "usuario.create.sucess");
 		return "redirect:/usuarios/listar" + (red ? "Loja" : "Cliente");
 	}
-	
+
 	@GetMapping("/editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
 		Usuario editable = service.buscarPorId(id);
@@ -82,22 +85,22 @@ public class UsuarioController {
 		model.addAttribute("usuario", editable);
 		return "usuario/cadastro" + (red ? "L" : "C");
 	}
-	
+
 	@PostMapping("/editar")
 	public String editar(@Valid Usuario usuario, BindingResult result, RedirectAttributes attr) {
-		
+
 		boolean red = usuario.getCPF().length() > 14;
-		if (result.getFieldErrorCount() > 1 || result.getFieldError("CPF") == null){
+		if (result.getFieldErrorCount() > 1 || result.getFieldError("CPF") == null) {
 			return "usuario/cadastro" + (red ? "L" : "C");
 		}
 
 		System.out.println(usuario.getPassword());
-		
+
 		service.salvar(usuario);
 		attr.addFlashAttribute("sucess", (red ? "loja" : "cliente") + ".edit.sucess");
 		return "redirect:/usuarios/listar" + (red ? "Loja" : "Cliente");
 	}
-	
+
 	@GetMapping("/excluir/{id}")
 	public String excluir(@PathVariable("id") Long id, ModelMap model) {
 		Usuario editable = service.buscarPorId(id);

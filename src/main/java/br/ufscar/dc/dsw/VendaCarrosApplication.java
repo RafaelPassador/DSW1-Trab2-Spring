@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import br.ufscar.dc.dsw.dao.ICarroDAO;
 import br.ufscar.dc.dsw.dao.IUsuarioDAO;
 import br.ufscar.dc.dsw.domain.Carro;
-import br.ufscar.dc.dsw.domain.Usuario; 
+import br.ufscar.dc.dsw.domain.Usuario;
 
 @SpringBootApplication
 public class VendaCarrosApplication {
@@ -25,7 +25,7 @@ public class VendaCarrosApplication {
 	@Bean
 	public CommandLineRunner demo(IUsuarioDAO usuarioDAO, BCryptPasswordEncoder encoder, ICarroDAO carroDAO) {
 		return (args) -> {
-			
+
 			Usuario u1 = new Usuario();
 			u1.setUsername("admin");
 			u1.setPassword(encoder.encode("admin"));
@@ -34,7 +34,7 @@ public class VendaCarrosApplication {
 			u1.setRole("ROLE_ADMIN");
 			u1.setEnabled(true);
 			usuarioDAO.save(u1);
-			
+
 			Usuario u2 = new Usuario();
 			u2.setUsername("beltrano");
 			u2.setPassword(encoder.encode("123"));
@@ -43,7 +43,7 @@ public class VendaCarrosApplication {
 			u2.setRole("ROLE_USER");
 			u2.setEnabled(true);
 			usuarioDAO.save(u2);
-			
+
 			Usuario u3 = new Usuario();
 			u3.setUsername("fulano");
 			u3.setPassword(encoder.encode("123"));
@@ -87,7 +87,7 @@ public class VendaCarrosApplication {
 			c.setQuilometragem(BigDecimal.valueOf(10));
 			c.setValor(BigDecimal.valueOf(100.20));
 			carroDAO.save(c);
-			
+
 		};
 	}
 }

@@ -17,7 +17,7 @@ public class PropostaService implements IPropostaService {
 
 	@Autowired
 	IPropostaDAO dao;
-	
+
 	public void salvar(Proposta proposta) {
 		dao.save(proposta);
 	}
@@ -27,26 +27,25 @@ public class PropostaService implements IPropostaService {
 	}
 
 	@Transactional(readOnly = true)
-    public Proposta buscarPorId(Long id) {
-        return dao.findById(id.longValue());
+	public Proposta buscarPorId(Long id) {
+		return dao.findById(id.longValue());
 	}
 
 	@Transactional(readOnly = true)
-    public List<Proposta> buscarTodos() {
+	public List<Proposta> buscarTodos() {
 		return dao.findAll();
 	}
 
-    @Transactional(readOnly = true)
-    public List<Proposta> buscarTodosUsuario(Long usuario_id) {
-        // TODO Auto-generated method stub
-        List<Proposta> all = dao.findAll();
-        List<Proposta> user = new ArrayList<>();
-        for(Proposta i : all)
-            if(i.getUsuario().getId() == usuario_id)
-                user.add(i);
-        return user;
-        // return dao.getOfferByUser(usuario_id);
-    }
+	@Transactional(readOnly = true)
+	public List<Proposta> buscarTodosUsuario(Long usuario_id) {
+		// TODO Auto-generated method stub
+		List<Proposta> all = dao.findAll();
+		List<Proposta> user = new ArrayList<>();
+		for (Proposta i : all)
+			if (i.getUsuario().getId() == usuario_id)
+				user.add(i);
+		return user;
+		// return dao.getOfferByUser(usuario_id);
+	}
 
-    
 }

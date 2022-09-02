@@ -46,24 +46,25 @@ public class MvcConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(localeChangeInterceptor());
 	}
-	
-	@Override
-    public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new BigDecimalConversor());
-    }
 
 	@Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        exposeDirectory("carros-fotos", registry);
-    }
-     
-    private void exposeDirectory(String dirName, ResourceHandlerRegistry registry) {
-        Path uploadDir = Paths.get(dirName);
-        String uploadPath = uploadDir.toFile().getAbsolutePath();
-         
-        if (dirName.startsWith("../")) dirName = dirName.replace("../", "");
-         
-        registry.addResourceHandler("/" + dirName + "/**").addResourceLocations("file:/"+ uploadPath + "/");
+	public void addFormatters(FormatterRegistry registry) {
+		registry.addConverter(new BigDecimalConversor());
+	}
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		exposeDirectory("carros-fotos", registry);
+	}
+
+	private void exposeDirectory(String dirName, ResourceHandlerRegistry registry) {
+		Path uploadDir = Paths.get(dirName);
+		String uploadPath = uploadDir.toFile().getAbsolutePath();
+
+		if (dirName.startsWith("../"))
+			dirName = dirName.replace("../", "");
+
+		registry.addResourceHandler("/" + dirName + "/**").addResourceLocations("file:/" + uploadPath + "/");
 
 	}
 }

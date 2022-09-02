@@ -12,7 +12,9 @@ import javax.validation.Payload;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueCNPJ {
-    String message() default "CNPJ is already registered";
-    Class<?>[] groups() default { };
-    Class<? extends Payload>[] payload() default { };
+	String message() default "CNPJ is already registered";
+
+	Class<?>[] groups() default {};
+
+	Class<? extends Payload>[] payload() default {};
 }

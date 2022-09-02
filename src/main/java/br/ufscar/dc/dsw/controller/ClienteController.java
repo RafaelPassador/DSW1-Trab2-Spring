@@ -24,62 +24,61 @@ import br.ufscar.dc.dsw.service.spec.IClienteService;
 @Controller
 @RequestMapping("/clientes")
 public class ClienteController {
-	
+
 	@Autowired
 	private IClienteService service;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder encoder;
-	
+
 	@GetMapping("/cadastrar")
 	public String cadastrar(Cliente usuario) {
 		return "cliente/cadastro";
 	}
-	
+
 	@GetMapping("/listar")
 	public String listar(ModelMap model) {
-		model.addAttribute("clientes",service.buscarTodos());
+		model.addAttribute("clientes", service.buscarTodos());
 		return "cliente/lista";
-	} 
-	
+	}
+
 	@PostMapping("/salvar")
 	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
-		
+
 		if (result.hasErrors()) {
 			return "cliente/cadastro";
 		}
-		 
 
 		// System.out.println("password = " + cliente.getPassword());
-		
+
 		// cliente.setPassword(encoder.encode(cliente.getPassword()));
 		service.salvar(cliente);
 
 		attr.addFlashAttribute("sucess", "cliente.create.sucess");
-        
+
 		return "redirect:/clientes/listar";
 	}
-	
+
 	@GetMapping("/editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
 		model.addAttribute("cliente", service.buscarPorId(id));
 		return "cliente/cadastro";
 	}
-	
+
 	@PostMapping("/editar")
 	public String editar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
-		
+
 		if (result.hasErrors()) {
 			return "cliente/cadastro";
 		}
 
 		// System.out.println(cliente.getPassword());
-		
+
 		service.salvar(cliente);
 		attr.addFlashAttribute("sucess", "cliente.edit.sucess");
 		return "redirect:/clientes/listar";
 	}
-	
+
 	@GetMapping("/excluir/{id}")
 	public String excluir(@PathVariable("id") Long id, ModelMap model) {
 		service.excluir(id);
