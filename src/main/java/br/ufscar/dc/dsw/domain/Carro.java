@@ -107,7 +107,6 @@ public class Carro extends AbstractEntity<Long> {
 
 	public void setPictures(String pictures) {
 		if (this.pictures == null || this.pictures.length() == 0) {
-			System.out.println("Tava nulo");
 			this.pictures = pictures + "|";
 		}
 		this.pictures += pictures + "|";
